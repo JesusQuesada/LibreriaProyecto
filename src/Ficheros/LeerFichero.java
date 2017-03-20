@@ -14,7 +14,7 @@ package Ficheros;
 
 public class LeerFichero {
     
-    public static void muestraContenido(String archivo) throws FileNotFoundException, IOException {
+    public void muestraContenido(File archivo) throws FileNotFoundException, IOException {
         String cadena;
         FileReader f = new FileReader(archivo);
         BufferedReader b = new BufferedReader(f);
@@ -22,7 +22,9 @@ public class LeerFichero {
             System.out.println(cadena);
         }
         b.close();
+    
     }
+    
    
 }
 

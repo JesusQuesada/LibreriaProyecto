@@ -6,8 +6,12 @@
 package Ficheros;
 
 import java.io.File;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 /**
  *
@@ -20,6 +24,7 @@ public class SelectorArchivos extends javax.swing.JFrame {
      */
     public SelectorArchivos() {
         initComponents();
+        
     }
 
     /**
@@ -34,10 +39,11 @@ public class SelectorArchivos extends javax.swing.JFrame {
         jFileChooser1 = new javax.swing.JFileChooser();
         jFileChooser2 = new javax.swing.JFileChooser();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setMaximumSize(new java.awt.Dimension(800, 500));
         setMinimumSize(new java.awt.Dimension(800, 500));
         setPreferredSize(new java.awt.Dimension(800, 500));
+        setResizable(false);
 
         jFileChooser2.setMinimumSize(new java.awt.Dimension(800, 500));
         jFileChooser2.setPreferredSize(new java.awt.Dimension(800, 500));
@@ -68,19 +74,29 @@ public class SelectorArchivos extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jFileChooser2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jFileChooser2ActionPerformed
-        JFileChooser seleccionarArchivo = (JFileChooser)evt.getSource();
+        JFileChooser seleccionarArchivo = (JFileChooser) evt.getSource();
+//        FileNameExtensionFilter filtro = new FileNameExtensionFilter("*.TXT", "txt");
+//        seleccionarArchivo.setFileFilter(filtro);
+
         String command = evt.getActionCommand();
-        SelectorArchivos sa = new SelectorArchivos();
-        
-        
-        if(command.equals(JFileChooser.APPROVE_SELECTION)){
+
+        if (command.equals(JFileChooser.APPROVE_SELECTION)) {
+            LeerFichero leer = new LeerFichero();
             File archivoSeleccionado = seleccionarArchivo.getSelectedFile();
-            sa.dispose();
-        }else if(command.equals(JFileChooser.CANCEL_SELECTION)){
-            sa.dispose();
+            try {
+                leer.muestraContenido(archivoSeleccionado);
+                
+            } catch (IOException ex) {
+                JOptionPane.showMessageDialog(null, "Error al leer el archivo");
+                this.dispose();
+            }
+
+            this.dispose();
+        } else if (command.equals(JFileChooser.CANCEL_SELECTION)) {
+            this.dispose();
         }
-        
-        
+
+
     }//GEN-LAST:event_jFileChooser2ActionPerformed
 
     /**
